@@ -65,7 +65,6 @@ program.output = program.output ? getFullPath(program.output) : program.input;
 
 if(program.js) {
     const js = program.js;
-    let jsFiles = '';
 
     js.forEach((js_arg) => {
         try {
@@ -95,7 +94,6 @@ if(program.js) {
 
 if(program.css) {
     const css = program.css;
-    let cssFiles = '';
 
     css.forEach((css_arg) => {
         try {
