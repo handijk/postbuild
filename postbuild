@@ -9,8 +9,8 @@ const glob = require('glob');
 const replaceStream = require('replacestream');
 const program = require('commander');
 
-let cssFiles;
-let jsFiles;
+let cssFiles = '';
+let jsFiles = '';
 let revision;
 let removeCondition;
 
