@@ -65,17 +65,18 @@ program.output = program.output ? getFullPath(program.output) : program.input;
 
 if(program.js) {
     const js = program.js;
+    let jsFiles = '';
 
     js.forEach((js_arg) => {
         try {
             if(glob.hasMagic(js_arg)) {
-                 jsFiles = glob.sync(js_arg)
+                 jsFiles += glob.sync(js_arg)
                  .map(file => removePrefix(file, program.ignore))
                  .map(file => `<script src="${file}"></script>`)
                  .join('\n');
             }
             else if(fs.lstatSync(js_arg).isDirectory()) {
-                 jsFiles = fs.readdirSync(js_arg)
+                 jsFiles += fs.readdirSync(js_arg)
                  .filter(file => file.substr(-3) === '.js')
                  .map(file => removePrefix(`${js_arg}/${file}`, program.ignore))
                  .map(file => `<script src="${file}"></script>`)
@@ -83,7 +84,7 @@ if(program.js) {
             }
             else if(fs.lstatSync(js_arg).isFile()) {
                 let file = removePrefix(js_arg, program.ignore);
-                jsFiles = `<script src="${file}"></script>`;
+                jsFiles += `<script src="${file}"></script>`;
             }
         }
         catch(e) {
@@ -94,17 +95,18 @@ if(program.js) {
 
 if(program.css) {
     const css = program.css;
+    let cssFiles = '';
 
     css.forEach((css_arg) => {
         try {
             if(glob.hasMagic(css_arg)) {
-                 cssFiles = glob.sync(css_arg)
+                 cssFiles += glob.sync(css_arg)
                  .map(file => removePrefix(file, program.ignore))
                  .map(file => `<link rel="stylesheet" href="${file}">`)
                  .join('\n');
             }
             else if(fs.lstatSync(css_arg).isDirectory()) {
-                cssFiles = fs.readdirSync(css_arg)
+                cssFiles += fs.readdirSync(css_arg)
                 .filter(file => file.substr(-4) === '.css')
                 .map(file => removePrefix(`${css}/${file}`, program.ignore))
                 .map(file => `<link rel="stylesheet" href="${file}">`)
@@ -112,7 +114,7 @@ if(program.css) {
             }
             else if(fs.lstatSync(css_arg).isFile()) {
                 let file = removePrefix(css_arg, program.ignore);
-                cssFiles = `<link rel="stylesheet" href="${file}">`;
+                cssFiles += `<link rel="stylesheet" href="${file}">`;
             }
         }
         catch(e) {
